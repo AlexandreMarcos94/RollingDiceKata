@@ -1,6 +1,8 @@
 package src;
 
 
+import java.util.ArrayList;
+
 public class Roll {
 
     public enum RollType {
@@ -12,15 +14,28 @@ public class Roll {
     // Attributes
 
     public Roll(String formula) {
-        // TODO
+       
+
     }
 
     public Roll(int diceValue, int nbRoll, int modifier) {
-        // TODO
+        int res = 0;
+        for(int i = 0; i < nbRoll; i++){
+            res += diceValue;
+        }
     }
 
     public int makeRoll(RollType rollType) {
-        // TODO
+        if(rollType == RollType.NORMAL){
+
+        }
+        if(rollType == RollType.ADVANTAGE){
+
+        }
+        if(rollType == RollType.DISADVANTAGE){
+
+        }
+
         return 0;
     }
 
