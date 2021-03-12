@@ -1,6 +1,4 @@
 package src;
-
-
 import java.util.ArrayList;
 
 public class Roll {
@@ -13,13 +11,22 @@ public class Roll {
 
     // Attributes
 
+    private int diceValue;
+    private int nbRoll;
+    private int modifier;
+    private Dice unD;
+    private int res;
+
     public Roll(String formula) {
-       
+
 
     }
 
+
+
     public Roll(int diceValue, int nbRoll, int modifier) {
-        int res = 0;
+        unD = new Dice(diceValue);
+        diceValue = unD.rollDice();
         for(int i = 0; i < nbRoll; i++){
             res += diceValue;
         }
@@ -27,16 +34,16 @@ public class Roll {
 
     public int makeRoll(RollType rollType) {
         if(rollType == RollType.NORMAL){
-
+            nbRoll = 1;
         }
         if(rollType == RollType.ADVANTAGE){
-
+            nbRoll = 2;
         }
         if(rollType == RollType.DISADVANTAGE){
-
+            nbRoll = 2;
         }
 
-        return 0;
+        return res;
     }
 
 }
