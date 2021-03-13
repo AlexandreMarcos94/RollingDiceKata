@@ -27,8 +27,13 @@ public class Roll {
     public Roll(int diceValue, int nbRoll, int modifier) {
         unD = new Dice(diceValue);
         diceValue = unD.rollDice();
-        for(int i = 0; i < nbRoll; i++){
-            res += diceValue;
+        if(diceValue < 1 || nbRoll < 1 || modifier < 0){
+            res = -1;
+        } else {
+            for (int i = 0; i < nbRoll; i++) {
+
+                res += diceValue;
+            }
         }
     }
 
