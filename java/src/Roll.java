@@ -46,7 +46,7 @@ public class Roll {
             form = formula.split("d");
             temp = form[1].split("[+-]");
             nbRoll = 1;
-            modifier = 0;
+            modifier = Integer.parseInt(temp[1]);
             diceValue = Integer.parseInt(temp[0]);
 
         }
@@ -55,10 +55,9 @@ public class Roll {
             System.out.println("cdc+c");
             form = formula.split("d");
             temp = form[1].split("[+-]");
-            System.out.println(diceValue);
             nbRoll = Integer.parseInt(form[0]);
             modifier = Integer.parseInt(temp[1]);
-            diceValue = Integer.parseInt(temp[1]);
+            diceValue = Integer.parseInt(temp[0]);
 
         }
 
