@@ -1,5 +1,7 @@
 package src;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Roll {
 
@@ -15,63 +17,81 @@ public class Roll {
     private int nbRoll;
     private int modifier;
     private Dice unD;
-    private int res;
-    private Integer temp;
+    private int res = 0;
+    private String[] temp;
     private String[] form;
 
     public Roll(String formula) {
 
-
-        if(formula.matches("/([0-9]?[d][0-9]([+]|[-])?[0-9]?)/")){
-
+        if(formula.matches("^([0-9]+[d][0-9]+)$")){
+            System.out.println("cdc");
             form = formula.split("d");
-            Integer nbRoll = Integer.parseInt(form[0]);
-            Integer dicevalue = Integer.parseInt(form[1]);
-            System.out.print(nbRoll);
-            System.out.print(dicevalue);
+            nbRoll = Integer.parseInt(form[0]);
+            diceValue = Integer.parseInt(form[1]);
+            modifier = 0;
 
-        } else {
+            }
 
-           System.out.println(formula.matches("/([0-9]?[d][0-9]([+]|[-])?[0-9]?)/"));
-            res = -1;
+        if(formula.matches("^([d][0-9]+)$")) {
+            System.out.println("dc");
+            form = formula.split("d");
+            nbRoll = 1;
+            modifier = 0;
+            diceValue = Integer.parseInt(form[1]);
+
         }
+
+        if(formula.matches("^([d][0-9]+([+]|[-])[0-9]+)$")){
+            System.out.println("dc+c");
+            form = formula.split("d");
+            temp = form[1].split("[+-]");
+            nbRoll = 1;
+            modifier = 0;
+            diceValue = Integer.parseInt(temp[0]);
+
+        }
+
+        if(formula.matches("^[0-9]+([d][0-9]+([+]|[-])[0-9]+)$")) {
+            System.out.println("cdc+c");
+            form = formula.split("d");
+            temp = form[1].split("[+-]");
+            System.out.println(diceValue);
+            nbRoll = Integer.parseInt(form[0]);
+            modifier = Integer.parseInt(temp[1]);
+            diceValue = Integer.parseInt(temp[1]);
+
+        }
+
+        System.out.println(diceValue);
+        System.out.println(modifier);
+        System.out.println(nbRoll);
 
     }
 
 
 
     public Roll(int diceValue, int nbRoll, int modifier) {
-        unD = new Dice(diceValue);
-        diceValue = unD.rollDice();
-        if(diceValue < 1 || nbRoll < 1 ){
-            res = -1;
-        } else {
-            for (int i = 0; i < nbRoll; i++) {
-                res += diceValue;
-            }
-            res += modifier;
-            if(res < -1){
-                res = 0;
-            }
-        }
-
+        this.diceValue = diceValue;
+        this.nbRoll = nbRoll;
+        this.modifier = modifier;
     }
 
     public int makeRoll(RollType rollType) {
 
-        if(rollType == RollType.NORMAL){
-            nbRoll = 1;
-
+        this.unD = new Dice( this.diceValue);
+        if( this.diceValue < 1 ||  this.nbRoll < 1 ){
+            this.res = -1;
+        } else {
+            for (int i = 0; i <  this.nbRoll; i++) {
+                this.res += this.unD.rollDice();
+            }
+            this.res +=  this.modifier;
+            if( this.res < -1){
+                this.res = 0;
+            }
         }
-        if(rollType == RollType.ADVANTAGE){
-            nbRoll = 2;
-        }
-        if(rollType == RollType.DISADVANTAGE){
-            nbRoll = 2;
-
-        }
-
-        return res;
+        System.out.println("nb" + nbRoll);
+        return  this.res;
     }
 
 }
